@@ -4,9 +4,11 @@
 Paleo Fisher
 
 ### INSTRUCTIONS
-- Download all files in the GitHub repo to local folder.
-- Run main.py file.
-- Game controls accessbile in-game on main menu.
+Pygame version: 2.1.2
+Python verison: 3.10.11
+1. Download all files in the GitHub repo to local folder.
+2. Run main.py file.
+3. Game controls accessbile in-game on main menu.
 
 
 # PART 2: GAME DESIGN
@@ -57,6 +59,17 @@ Any changes to my original vision were primarily based in timing. Yes, the featu
 - end_game(): handles screen display at the completion of the game and allows the player the option to start again
 - count_down(): handles the screen display when counting down from 3 to begin each period
 
+### CONTROLLER-MODEL-VIEW
+
+**CONTROLLER**
+The primary game loop and major methods handle player input by actively detecting pygame keydown events
+
+**MODEL**
+The classes store all relevant data pertaining to the player/enemy/obstacles/powerups including state, stats, information, position, current image, and direction (if applicable)
+
+**VIEW**
+The primary game loop and major methods handle screen display with each major method catering to a specific screen
+
 ### MAJOR BUGS
 - There may be an issue with the barrel power-up sound effect playing in bursts rather than a single time
 - If a fish is caught exactly as a period changes, after clicking through the new period screen the player may be immediately prompted with a caught fish screen
@@ -66,11 +79,33 @@ Any changes to my original vision were primarily based in timing. Yes, the featu
 - Not technically a bug, but the oar power-up has no sound effect
 
 ### COLLABORATION
-I worked alone. My environment was VSCode.
+I worked alone! My environment was VSCode.
 
 # PART 5: GROUP MEMBER ROLES, TASKS, AND PERFORMANCE
 
-I worked alone.
+I worked alone!
 
 ### TIMELINE
 
+**MILESTONE 1**
+- Completed player movements via arrow keys
+- Completed player fishing action toggle via spacebar
+- Completed fishing area animation and location randomization
+- Completed enemy animation and movement randomization and targetting movement
+- Completed live player stat display
+- Completed live game stat display (current time and period)
+
+**MILESTONE 2**
+- Completed player pause capability via p
+- Completed fishing function that prompts animal information screen
+- Completed enemy collision function that prompts information screen and impacts player stats
+- Completed buoy implementation and function that impacts player stats
+- Completed information screen that appears at the start of each period
+- Completed animal discovery display connected to each period
+
+**MILESTONE 3 / FINAL SUBMISSION**
+- Completed end-screen highscore and achievements display
+- Completed game-over screen if player fails to reach completion
+- Completed full period and animal class implementations
+- Completed full obstacle, powerup, and enemy movement configurations
+- Completed finalizing live stat and informational display
