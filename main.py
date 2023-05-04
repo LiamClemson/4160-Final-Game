@@ -562,6 +562,9 @@ def end_game():
     highscore4value = float(highscore1[14:])
     highscore5value = float(highscore1[14:])
 
+    global hit_by_enemy
+    global start_period
+    global curr_period
     global curr_year
     global time_0
     global highscore
@@ -575,6 +578,7 @@ def end_game():
     global curr_period_text
     global creatures_found
     global hit_by_enemy
+    global next_period_countdown
     game_end = True
     pygame.mixer.music.load('pirateship.wav')
     pygame.mixer.music.play(-1)
@@ -596,9 +600,10 @@ def end_game():
     if creatures_found >= 22:
         achievements_text += 'MARINE BIOLOGIST (DISCOVER OVER 75% OF TOTAL ANIMALS)\n'
         total_achievements += 1
-    achievements_text += '\n[ '+str(total_achievements)+' OUT OF 5 ACHIEVEMENTS ACCOMPLISHED ]'
+    achievements_text += '\n( '+str(total_achievements)+' OUT OF 5 ACHIEVEMENTS ACCOMPLISHED )'
     
     font = pygame.font.SysFont('Camrbia', 30)
+    youwin_text = font.render('YOU WIN', True, (34,136,0))
     playagain_text = font.render('[ PRESS \'F\' TO RETURN TO MENU ]', True, (0,0,0))
     enter_initials_text = font.render('PLEASE ENTER YOUR INITIALS: ', True, (0,0,0))
 
@@ -654,8 +659,9 @@ def end_game():
         playerscore_text = font.render('SCORE: '+'{:0.1f}'.format(player.score), True, (0,0,0))
         creatures_caught_text = font.render('TOTAL FISH: '+str(player.net), True, (0,0,0))
 
-        screen.blit(playerscore_text, (10, 10))
-        screen.blit(creatures_caught_text, (10, 30))
+        screen.blit(youwin_text, (10, 10))
+        screen.blit(playerscore_text, (10, 30))
+        screen.blit(creatures_caught_text, (10, 50))
 
         screen.blit(highscore_text, (SCREEN_WIDTH-300, 10))
         screen.blit(highscore1_text, (SCREEN_WIDTH-300, 30))
@@ -667,7 +673,7 @@ def end_game():
         if initials_complete:
             screen.blit(playagain_text, (10, SCREEN_HEIGHT-playagain_text.get_height()*2))
 
-        compact_text(screen, achievements_text, (10,50), font, (0,0,0))
+        compact_text(screen, achievements_text, (10,100), font, (0,0,0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 read_file.close()
@@ -684,8 +690,11 @@ def end_game():
                     write_file.close()
                     game_end = False
                     new_game = True
+                    start_period = False
+                    hit_by_enemy = False
                     creatures = [0]*30
                     curr_year = 541
+                    curr_period = 0
                     time_0 = time.time()
                     player.initials = ''
                     player.speed = 2
@@ -694,6 +703,11 @@ def end_game():
                     player.fishing = False
                     player.score = 0
                     player.net = 0
+                    enemy.ypos = SCREEN_HEIGHT*10
+                    buoyObstacle.set_location()
+                    buoyObstacle2.enabled = False
+                    buoyObstacle2.ypos = SCREEN_HEIGHT*2
+                    next_period_countdown = 56
                     pygame.mixer.music.stop()
                     clock_text = clock_font.render(str(curr_year) + ' MYA | '+str(next_period_countdown)+' MILLION YEARS LEFT |', True, clock_text_color)
                     player_health_text = ui_font.render('HEALTH: ' + str(player.healthbar()), True, (255, 255, 255))
@@ -703,7 +717,87 @@ def end_game():
                     curr_period_text = ui_font.render('CAMBRIAN PERIOD', True, (255, 255, 255))
                     reset_prestige_text()
         pygame.display.update()
-        clock.tick(40)  
+        clock.tick(40)
+'''                                                     '''
+'''                                                     '''
+'''                                                     '''
+'''                 GAME OVER SCREEN                    '''
+'''                                                     '''
+'''                                                     '''
+'''                                                     '''
+def game_over():
+    global hit_by_enemy
+    global start_period
+    global curr_period
+    global curr_year
+    global time_0
+    global highscore
+    global new_game
+    global creatures
+    global clock_text
+    global player_health_text
+    global player_speed_text
+    global player_score_text
+    global player_total_text
+    global curr_period_text
+    global creatures_found
+    global hit_by_enemy
+    game_end = True
+
+    pygame.mixer.music.load('pirateship.wav')
+    pygame.mixer.music.play(-1)
+    pygame.mixer.music.set_volume(0.25)
+    
+    font = pygame.font.SysFont('Camrbia', 30)
+    gameover_text = font.render('GAME OVER', True, (238,0,0))
+    playagain_text = font.render('[ PRESS \'F\' TO RETURN TO MENU ]', True, (0,0,0))
+
+    while game_end:
+        screen.fill((255, 255, 255))
+
+        playerscore_text = font.render('SCORE: '+'{:0.1f}'.format(player.score), True, (0,0,0))
+        creatures_caught_text = font.render('TOTAL FISH: '+str(player.net), True, (0,0,0))
+
+        screen.blit(gameover_text, (10, 10))
+        screen.blit(playerscore_text, (10, 50))
+        screen.blit(creatures_caught_text, (10, 70))
+        screen.blit(playagain_text, (10, SCREEN_HEIGHT-playagain_text.get_height()*2))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_f:
+                    game_end = False
+                    new_game = True
+                    creatures = [0]*30
+                    curr_year = 541
+                    start_period = False
+                    hit_by_enemy = False
+                    time_0 = time.time()
+                    player.initials = ''
+                    player.speed = 2
+                    player.curr_speed = 2
+                    player.health = 5
+                    player.fishing = False
+                    player.score = 0
+                    player.net = 0
+                    enemy.ypos = SCREEN_HEIGHT*10
+                    buoyObstacle.set_location()
+                    buoyObstacle2.enabled = False
+                    buoyObstacle2.ypos = SCREEN_HEIGHT*2
+                    next_period_countdown = 56
+                    pygame.mixer.music.stop()
+                    clock_text = clock_font.render(str(curr_year) + ' MYA | '+str(next_period_countdown)+' MILLION YEARS LEFT |', True, clock_text_color)
+                    player_health_text = ui_font.render('HEALTH: ' + str(player.healthbar()), True, (255, 255, 255))
+                    player_speed_text = ui_font.render('SPEED: ' + str(player.speedbar()), True, (255, 255, 255))
+                    player_score_text = ui_font.render('SCORE: ' + '{:0.1f}'.format(player.score), True, (255, 255, 255))
+                    player_total_text = ui_font.render('ANIMALS CAUGHT: ' + str(player.net), True, (255, 255, 255))
+                    curr_period_text = ui_font.render('CAMBRIAN PERIOD', True, (255, 255, 255))
+                    reset_prestige_text()
+        pygame.display.update()
+        clock.tick(40)
 '''                                                     '''
 '''                                                     '''
 '''                                                     '''
@@ -780,7 +874,7 @@ while True:
     #check if game is paused; else decrement 'curr_year' by 1 per second passed
     if pause_enabled == False:
         time_1 = time.time()
-        if time_1 - time_0 >= 1.5: #increments every 'n' seconds
+        if time_1 - time_0 >= 0.2: #increments every 'n' seconds
             curr_year -= 1
             time_0 = time_1
             next_period_countdown -= 1
@@ -1050,9 +1144,7 @@ while True:
         buoyObstacle2.update(current_time, screen, buoyobstacle2)
 
     if player.health <= 0:
-        print('GAME OVER')
-        pygame.quit()
-        sys.exit
+        game_over()
 
     # update game display
     pygame.display.update()

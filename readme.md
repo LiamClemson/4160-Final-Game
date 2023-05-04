@@ -10,7 +10,6 @@ Python verison: 3.10.11
 2. Run main.py file.
 3. Game controls accessbile in-game on main menu.
 
-
 # PART 2: GAME DESIGN
 
 ### MECHANICS / TECHNOLOGY
@@ -73,9 +72,10 @@ The primary game loop and major methods handle screen display with each major me
 ### MAJOR BUGS
 - There may be an issue with the barrel power-up sound effect playing in bursts rather than a single time
 - If a fish is caught exactly as a period changes, after clicking through the new period screen the player may be immediately prompted with a caught fish screen
-- The highscores display at the completion of the game may not properly update
-- There may be issues inputting your initials at the completion of the game to go with your score
+- The highscores display at the completion of the game do not properly update after a first run-through (I started implementing this feature last second and will not be able to see it come to full-fruition), additionally, the highscore will not cut off in the tens place when updated
+- There are issues inputting your initials at the completion of the game to go with your score after a first run-through
 - Some sprites (specifically the buoy) may blit on screen for a split moment when reverting back to the main menu screen after completing at least one run-through
+- At the start of each period during the count down phase the screen display may indicate there are "0 MILLION YEARS LEFT" until the count down completes in which the proper value is displayed and incremented
 - Not technically a bug, but the oar power-up has no sound effect
 
 ### COLLABORATION

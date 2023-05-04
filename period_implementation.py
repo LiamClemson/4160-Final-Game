@@ -88,7 +88,16 @@ carPeriod.period += 'Carboniferous Period'
 
 carPeriod.timeframe += '359mya to 299mya (60 million years)'
 
-carPeriod.description = ''
+carPeriod.description = 'The Carboniferous Period laid the foundation of raw material for the Earths coal deposits. Hence the \'carbon\' part of the name.\n\n'
+carPeriod.description += 'The North America/Europe continent near the equator, the modern Siberia continent in the North, and Gondwana all continued to move towards each other and would begin to form Pangaea. '
+carPeriod.description += 'There was a uniform trpoical and wet climate around the globe with limited seasonality. '
+carPeriod.description += 'Forests were widespread at the equator and the land was moist. The hot humid climate catalyzed an explosion of diverstity and new life. '
+carPeriod.description += 'The first conifer plants appeared as well as the first true amphibians, reptiles, winged-insects, and more. '
+carPeriod.description += 'Since the land was essentially covered in rainforest and swamp, oxygen levels reached up to 35'+'%'+'.\n\n'
+carPeriod.description += 'Chondrichthians (ancestors to the modern shark) diversified and dominated the oceans.\n\n'
+carPeriod.description += 'Unforunately, due to the large output of oxygen and intake of carbon dioxide around the globe, temperatures began to gradually drop over the period. '
+carPeriod.description += 'Additionally, as the land masses joined together, rain clouds struggled to reach the innermost portions of Pangaea.\n\n'
+carPeriod.description += 'This would lead to southern Pangaea being locked in ice, and the disappearance of rainforests and swamps in many places...'
 
 # PERMIAN PERIOD #
 perPeriod = Period()
@@ -98,4 +107,11 @@ perPeriod.period += 'Permian Period'
 
 perPeriod.timeframe += '299mya to 252mya (47 million years)'
 
-perPeriod.description = ''
+perPeriod.description = 'Glaciation was widespread at the start of the Permian Period. However, the climate would gradually warm over the Period until '
+perPeriod.description += 'eventually causing very hot and arid conditions. This global warming would prove to be a crisis for life worldwide by the end of the period.\n\n'
+perPeriod.description += 'At this point Pangaea is fully-formed and surrounded by the world ocean, Panthalassa, and the Tethys Sea. ' 
+perPeriod.description += 'Insects and plants experienced rapid evolution. Additionally, the first important reptile lineages appeared, although there were still no \'true reptiles\'.\n\n'
+perPeriod.description += 'The end of this period would feature the largest mass-extinction event in Earths history...\n\n'
+perPeriod.description += '... roughly 95'+'%'+' of marine species and 70'+'%'+' of land species will perish from high levels of carbon dioxide, '
+perPeriod.description += 'volcanic eruptions, and temperature rises... the oceans would experience widespread anoxia and acidification...\n\n'
+perPeriod.description += 'Good thing this is our last stop. Just be sure to make it until the end!'
