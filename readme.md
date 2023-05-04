@@ -77,6 +77,7 @@ The primary game loop and major methods handle screen display with each major me
 - Some sprites (specifically the buoy) may blit on screen for a split moment when reverting back to the main menu screen after completing at least one run-through
 - At the start of each period during the count down phase the screen display may indicate there are "0 MILLION YEARS LEFT" until the count down completes in which the proper value is displayed and incremented
 - If viewing an animal screen and a fishing area randomly spawns on the players location at the start of end of the animals screen appearing the player may immediately catch an additional animal with little transition
+- If a player loses the game and restarts to the main menu some variables may not update, this should be a simple fix but was not implemented in time, relaunching the main.py file should avoid issuses restarting
 - Not technically a bug, but the oar power-up has no sound effect
 
 ### COLLABORATION
