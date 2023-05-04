@@ -874,7 +874,7 @@ while True:
     #check if game is paused; else decrement 'curr_year' by 1 per second passed
     if pause_enabled == False:
         time_1 = time.time()
-        if time_1 - time_0 >= 0.2: #increments every 'n' seconds
+        if time_1 - time_0 >= 1.5: #increments every 'n' seconds
             curr_year -= 1
             time_0 = time_1
             next_period_countdown -= 1
