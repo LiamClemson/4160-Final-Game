@@ -167,10 +167,11 @@ def beastiary():
     global creatures_found
     global creatures_unknown
     for x in creatures:
-        if x == True:
+        if x >= 1:
             found += 1
     creatures_found = found
     creatures_unknown = 30 - found
+    print(str(creatures_found))
 
 #FUNCTION
 #UPDATE PERIOD OVER TIME
@@ -368,6 +369,23 @@ def updatePeriod(screen, year):
 '''                                                     '''
 '''                                                     '''
 def main_menu():
+    font = pygame.font.SysFont('Camrbia', 30)
+    with open('highscores.txt', 'r') as file:
+        highscores = file.readlines()
+
+        highscore1 = highscores[0].strip()
+        highscore2 = highscores[1].strip()
+        highscore3 = highscores[2].strip()
+        highscore4 = highscores[3].strip()
+        highscore5 = highscores[4].strip()
+
+        highscore_text = font.render('HIGHSCORES:', True, (0,0,0))
+        highscore1_text = font.render(str(highscore1), True, (0,0,0))
+        highscore2_text = font.render(str(highscore2), True, (0,0,0))
+        highscore3_text = font.render(str(highscore3), True, (0,0,0))
+        highscore4_text = font.render(str(highscore4), True, (0,0,0))
+        highscore5_text = font.render(str(highscore5), True, (0,0,0))
+
     pygame.mixer.music.load('shoreline.wav')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.25)
@@ -415,6 +433,12 @@ def main_menu():
 
         if menu:
             screen.fill((255, 255, 255))
+            screen.blit(highscore_text, (SCREEN_WIDTH/2-highscore_text.get_width()/2, 300))
+            screen.blit(highscore1_text, (SCREEN_WIDTH/2-highscore_text.get_width()/2, 320))
+            screen.blit(highscore2_text, (SCREEN_WIDTH/2-highscore_text.get_width()/2, 340))
+            screen.blit(highscore3_text, (SCREEN_WIDTH/2-highscore_text.get_width()/2, 360))
+            screen.blit(highscore4_text, (SCREEN_WIDTH/2-highscore_text.get_width()/2, 380))
+            screen.blit(highscore5_text, (SCREEN_WIDTH/2-highscore_text.get_width()/2, 400))
             title_font = pygame.font.SysFont('Camrbia', 75)
             menu_font = pygame.font.SysFont('Camrbia', 25)
             title_text = title_font.render('Paleo Fisher', True, (0,0,0))
@@ -544,180 +568,197 @@ def information_screen(animal_screen):
 '''                                                     '''
 '''                                                     '''
 def end_game():
-    with open('highscores.txt', 'r+') as read_file:
-        highscores = read_file.readlines()
 
-    check_score = True
-    initials_complete = False
+    with open('highscores.txt', 'r+') as file:
+        highscores = file.readlines()
 
-    highscore1 = highscores[0].strip()
-    highscore2 = highscores[1].strip()
-    highscore3 = highscores[2].strip()
-    highscore4 = highscores[3].strip()
-    highscore5 = highscores[4].strip()
+        check_score = True
+        initials_complete = False
 
-    highscore1value = float(highscore1[14:])
-    highscore2value = float(highscore1[14:])
-    highscore3value = float(highscore1[14:])
-    highscore4value = float(highscore1[14:])
-    highscore5value = float(highscore1[14:])
+        highscore1 = highscores[0].strip()
+        highscore2 = highscores[1].strip()
+        highscore3 = highscores[2].strip()
+        highscore4 = highscores[3].strip()
+        highscore5 = highscores[4].strip()
 
-    global hit_by_enemy
-    global start_period
-    global curr_period
-    global curr_year
-    global time_0
-    global highscore
-    global new_game
-    global creatures
-    global clock_text
-    global player_health_text
-    global player_speed_text
-    global player_score_text
-    global player_total_text
-    global curr_period_text
-    global creatures_found
-    global hit_by_enemy
-    global next_period_countdown
-    game_end = True
-    pygame.mixer.music.load('pirateship.wav')
-    pygame.mixer.music.play(-1)
-    pygame.mixer.music.set_volume(0.25)
-    total_achievements = 0
-    achievements_text = '\nACHIEVEMENTS:\n\n'
-    if player.health == 5:
-        achievements_text += 'MASTER SHIPWRIGHT (FINISH WITH FULL HEALTH)\n'
-        total_achievements += 1
-    if player.net >= 50:
-        achievements_text += 'MASTER ANGLER (CATCH 50+ ANIMALS)\n'
-        total_achievements += 1
-    if player.score >= 500:
-        achievements_text += 'TROPHY ANGLER (SCORE 500+ POINTS)\n'
-        total_achievements += 1
-    if hit_by_enemy:
-        achievements_text += 'CAPTAIN AHAB (ENCOUNTER A BEAST OF THE SEA)\n'
-        total_achievements += 1
-    if creatures_found >= 22:
-        achievements_text += 'MARINE BIOLOGIST (DISCOVER OVER 75% OF TOTAL ANIMALS)\n'
-        total_achievements += 1
-    achievements_text += '\n( '+str(total_achievements)+' OUT OF 5 ACHIEVEMENTS ACCOMPLISHED )'
+        highscore1value = float(highscore1.split()[-1])
+        highscore2value = float(highscore2.split()[-1])
+        highscore3value = float(highscore3.split()[-1])
+        highscore4value = float(highscore4.split()[-1])
+        highscore5value = float(highscore5.split()[-1])
+
+        global hit_by_enemy
+        global start_period
+        global curr_period
+        global curr_year
+        global time_0
+        global highscore
+        global new_game
+        global creatures
+        global clock_text
+        global player_health_text
+        global player_speed_text
+        global player_score_text
+        global player_total_text
+        global curr_period_text
+        global creatures_found
+        global hit_by_enemy
+        global next_period_countdown
+        game_end = True
+        pygame.mixer.music.load('pirateship.wav')
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.25)
+        total_achievements = 0
+        achievements_text = '\nACHIEVEMENTS:\n\n'
+        if player.health == 5:
+            achievements_text += 'MASTER SHIPWRIGHT (FINISH WITH FULL HEALTH)\n'
+            total_achievements += 1
+        if player.net >= 50:
+            achievements_text += 'MASTER ANGLER (CATCH 50+ ANIMALS)\n'
+            total_achievements += 1
+        if player.score >= 500:
+            achievements_text += 'TROPHY ANGLER (SCORE 500+ POINTS)\n'
+            total_achievements += 1
+        if hit_by_enemy:
+            achievements_text += 'CAPTAIN AHAB (ENCOUNTER A BEAST OF THE SEA)\n'
+            total_achievements += 1
+        if creatures_found >= 22:
+            achievements_text += 'MARINE BIOLOGIST (DISCOVER OVER 75% OF TOTAL ANIMALS)\n'
+            total_achievements += 1
+        achievements_text += '\n( '+str(total_achievements)+' OUT OF 5 ACHIEVEMENTS ACCOMPLISHED )'
     
-    font = pygame.font.SysFont('Camrbia', 30)
-    youwin_text = font.render('YOU WIN', True, (34,136,0))
-    playagain_text = font.render('[ PRESS \'F\' TO RETURN TO MENU ]', True, (0,0,0))
-    enter_initials_text = font.render('PLEASE ENTER YOUR INITIALS: ', True, (0,0,0))
+        font = pygame.font.SysFont('Camrbia', 30)
+        youwin_text = font.render('YOU WIN', True, (34,136,0))
+        playagain_text = font.render('[ PRESS \'F\' TO RETURN TO MENU ]', True, (0,0,0))
+        enter_initials_text = font.render('PLEASE ENTER YOUR INITIALS: ', True, (0,0,0))
 
-    while game_end:
-        if len(player.initials) == 3:
-            initials_complete = True
-            if player.score > highscore1value and check_score:
-                highscore5 = highscore4
-                highscore4 = highscore3
-                highscore3 = highscore2
-                highscore2 = highscore1
-                highscore1 = '1     '+(player.initials).upper()+'     '+str(player.score)
-                check_score = False
-            elif player.score > highscore2value and check_score:
-                highscore5 = highscore4
-                highscore4 = highscore3
-                highscore3 = highscore2
-                highscore2 = '1     '+(player.initials).upper()+'     '+str(player.score)
-                check_score = False
-            elif player.score > highscore3value and check_score:
-                highscore5 = highscore4
-                highscore4 = highscore3
-                highscore3 = '1     '+(player.initials).upper()+'     '+str(player.score)
-                check_score = False
-            elif player.score > highscore3value and check_score:
-                highscore5 = highscore4
-                highscore4 = highscore3
-                highscore3 = '1     '+(player.initials).upper()+'     '+str(player.score)
-                check_score = False
-            elif player.score > highscore4value and check_score:
-                highscore5 = highscore4
-                highscore4 = '1     '+(player.initials).upper()+'     '+str(player.score)
-                check_score = False
-            elif player.score > highscore5value and check_score:
-                highscore5 = '1     '+(player.initials).upper()+'     '+str(player.score)
-                check_score = False
-            else:
-                check_score = False
-        with open('highscores.txt', 'w') as write_file:
-            write_file.writelines(highscores)
+        while game_end:
+            if len(player.initials) == 3:
+                initials_complete = True
+                if player.score > highscore1value and check_score:
+                    print('new 1st')
+                    file.seek(0)
+                    file.write('1     '+(player.initials).upper()+'     '+'{:0.1f}'.format(player.score)+'\n')
+                    file.write('2     '+highscore1[6:9]+'     '+highscore1.split()[-1]+'\n')
+                    file.write('3     '+highscore2[6:9]+'     '+highscore2.split()[-1]+'\n')
+                    file.write('4     '+highscore3[6:9]+'     '+highscore3.split()[-1]+'\n')
+                    file.write('5     '+highscore4[6:9]+'     '+highscore4.split()[-1]+'\n')
+                    check_score = False
+                elif player.score > highscore2value and check_score:
+                    print('new 2nd')
+                    file.seek(0)
+                    file.write('1     '+highscore1[6:9]+'     '+highscore1.split()[-1]+'\n')
+                    file.write('2     '+(player.initials).upper()+'     '+'{:0.1f}'.format(player.score)+'\n')
+                    file.write('3     '+highscore2[6:9]+'     '+highscore2.split()[-1]+'\n')
+                    file.write('4     '+highscore3[6:9]+'     '+highscore3.split()[-1]+'\n')
+                    file.write('5     '+highscore4[6:9]+'     '+highscore4.split()[-1]+'\n')
+                    check_score = False
+                elif player.score > highscore3value and check_score:
+                    print('new 3rd')
+                    file.seek(0)
+                    file.write('1     '+highscore1[6:9]+'     '+highscore1.split()[-1]+'\n')
+                    file.write('2     '+highscore2[6:9]+'     '+highscore2.split()[-1]+'\n')
+                    file.write('3     '+(player.initials).upper()+'     '+'{:0.1f}'.format(player.score)+'\n')
+                    file.write('4     '+highscore3[6:9]+'     '+highscore3.split()[-1]+'\n')
+                    file.write('5     '+highscore4[6:9]+'     '+highscore4.split()[-1]+'\n')
+                    check_score = False
+                elif player.score > highscore4value and check_score:
+                    print('new 4th')
+                    file.seek(0)
+                    file.write('1     '+highscore1[6:9]+'     '+highscore1.split()[-1]+'\n')
+                    file.write('2     '+highscore2[6:9]+'     '+highscore2.split()[-1]+'\n')
+                    file.write('3     '+highscore3[6:9]+'     '+highscore3.split()[-1]+'\n')
+                    file.write('4     '+(player.initials).upper()+'     '+'{:0.1f}'.format(player.score)+'\n')
+                    file.write('5     '+highscore4[6:9]+'     '+highscore4.split()[-1]+'\n')
+                    check_score = False
+                elif player.score > highscore5value and check_score:
+                    print('new 5th')
+                    file.seek(0)
+                    file.write('1     '+highscore1[6:9]+'     '+highscore1.split()[-1]+'\n')
+                    file.write('2     '+highscore2[6:9]+'     '+highscore2.split()[-1]+'\n')
+                    file.write('3     '+highscore3[6:9]+'     '+highscore3.split()[-1]+'\n')
+                    file.write('4     '+highscore4[6:9]+'     '+highscore4.split()[-1]+'\n')
+                    file.write('5     '+(player.initials).upper()+'     '+'{:0.1f}'.format(player.score)+'\n')
+                    check_score = False
+                else:
+                    pass
+            
+            highscore1 = highscores[0].strip()
+            highscore2 = highscores[1].strip()
+            highscore3 = highscores[2].strip()
+            highscore4 = highscores[3].strip()
+            highscore5 = highscores[4].strip()
 
-        screen.fill((255, 255, 255))
+            screen.fill((255, 255, 255))
         
-        screen.blit(enter_initials_text, (10, SCREEN_HEIGHT-playagain_text.get_height()*2-enter_initials_text.get_height()*2))
+            screen.blit(enter_initials_text, (10, SCREEN_HEIGHT-playagain_text.get_height()*2-enter_initials_text.get_height()*2))
 
-        highscore_text = font.render('HIGHSCORES:', True, (0,0,0))
-        highscore1_text = font.render(str(highscore1), True, (0,0,0))
-        highscore2_text = font.render(str(highscore2), True, (0,0,0))
-        highscore3_text = font.render(str(highscore3), True, (0,0,0))
-        highscore4_text = font.render(str(highscore4), True, (0,0,0))
-        highscore5_text = font.render(str(highscore5), True, (0,0,0))
+            highscore_text = font.render('HIGHSCORES:', True, (0,0,0))
+            highscore1_text = font.render(str(highscore1), True, (0,0,0))
+            highscore2_text = font.render(str(highscore2), True, (0,0,0))
+            highscore3_text = font.render(str(highscore3), True, (0,0,0))
+            highscore4_text = font.render(str(highscore4), True, (0,0,0))
+            highscore5_text = font.render(str(highscore5), True, (0,0,0))
 
-        playerscore_text = font.render('SCORE: '+'{:0.1f}'.format(player.score), True, (0,0,0))
-        creatures_caught_text = font.render('TOTAL FISH: '+str(player.net), True, (0,0,0))
+            playerscore_text = font.render('SCORE: '+'{:0.1f}'.format(player.score), True, (0,0,0))
+            creatures_caught_text = font.render('TOTAL FISH: '+str(player.net), True, (0,0,0))
 
-        screen.blit(youwin_text, (10, 10))
-        screen.blit(playerscore_text, (10, 30))
-        screen.blit(creatures_caught_text, (10, 50))
+            screen.blit(youwin_text, (10, 10))
+            screen.blit(playerscore_text, (10, 30))
+            screen.blit(creatures_caught_text, (10, 50))
 
-        screen.blit(highscore_text, (SCREEN_WIDTH-300, 10))
-        screen.blit(highscore1_text, (SCREEN_WIDTH-300, 30))
-        screen.blit(highscore2_text, (SCREEN_WIDTH-300, 50))
-        screen.blit(highscore3_text, (SCREEN_WIDTH-300, 70))
-        screen.blit(highscore4_text, (SCREEN_WIDTH-300, 90))
-        screen.blit(highscore5_text, (SCREEN_WIDTH-300, 110))
+            screen.blit(highscore_text, (SCREEN_WIDTH-300, 10))
+            screen.blit(highscore1_text, (SCREEN_WIDTH-300, 30))
+            screen.blit(highscore2_text, (SCREEN_WIDTH-300, 50))
+            screen.blit(highscore3_text, (SCREEN_WIDTH-300, 70))
+            screen.blit(highscore4_text, (SCREEN_WIDTH-300, 90))
+            screen.blit(highscore5_text, (SCREEN_WIDTH-300, 110))
 
-        if initials_complete:
-            screen.blit(playagain_text, (10, SCREEN_HEIGHT-playagain_text.get_height()*2))
+            if initials_complete:
+                screen.blit(playagain_text, (10, SCREEN_HEIGHT-playagain_text.get_height()*2))
 
-        compact_text(screen, achievements_text, (10,100), font, (0,0,0))
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                read_file.close()
-                write_file.close()
-                pygame.quit()
-                quit()
-            if event.type == pygame.KEYDOWN and not (event.key == pygame.K_f) and len(player.initials) != 3:
-                player.initials += event.unicode
-                enter_initials_text = font.render('PLEASE ENTER YOUR INITIALS: '+(player.initials).upper(), True, (0,0,0))
-                print(player.initials)
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_f and len(player.initials) == 3:
-                    read_file.close()
-                    write_file.close()
-                    game_end = False
-                    new_game = True
-                    start_period = False
-                    hit_by_enemy = False
-                    creatures = [0]*30
-                    curr_year = 541
-                    curr_period = 0
-                    time_0 = time.time()
-                    player.initials = ''
-                    player.speed = 2
-                    player.curr_speed = 2
-                    player.health = 5
-                    player.fishing = False
-                    player.score = 0
-                    player.net = 0
-                    enemy.ypos = SCREEN_HEIGHT*10
-                    buoyObstacle.set_location()
-                    buoyObstacle2.enabled = False
-                    buoyObstacle2.ypos = SCREEN_HEIGHT*2
-                    next_period_countdown = 56
-                    pygame.mixer.music.stop()
-                    clock_text = clock_font.render(str(curr_year) + ' MYA | '+str(next_period_countdown)+' MILLION YEARS LEFT |', True, clock_text_color)
-                    player_health_text = ui_font.render('HEALTH: ' + str(player.healthbar()), True, (255, 255, 255))
-                    player_speed_text = ui_font.render('SPEED: ' + str(player.speedbar()), True, (255, 255, 255))
-                    player_score_text = ui_font.render('SCORE: ' + '{:0.1f}'.format(player.score), True, (255, 255, 255))
-                    player_total_text = ui_font.render('ANIMALS CAUGHT: ' + str(player.net), True, (255, 255, 255))
-                    curr_period_text = ui_font.render('CAMBRIAN PERIOD', True, (255, 255, 255))
-                    reset_prestige_text()
-        pygame.display.update()
-        clock.tick(40)
+            compact_text(screen, achievements_text, (10,100), font, (0,0,0))
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+                if event.type == pygame.KEYDOWN and len(player.initials) != 3:
+                    if event.unicode.isalpha():
+                        player.initials += event.unicode
+                    enter_initials_text = font.render('PLEASE ENTER YOUR INITIALS: '+(player.initials).upper(), True, (0,0,0))
+                    print(player.initials)
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_f and len(player.initials) == 3:
+                        game_end = False
+                        new_game = True
+                        start_period = False
+                        hit_by_enemy = False
+                        creatures = [0]*30
+                        curr_year = 541
+                        curr_period = 0
+                        time_0 = time.time()
+                        player.initials = ''
+                        player.speed = 2
+                        player.curr_speed = 2
+                        player.health = 5
+                        player.fishing = False
+                        player.score = 0
+                        player.net = 0
+                        enemy.ypos = SCREEN_HEIGHT*10
+                        buoyObstacle.set_location()
+                        buoyObstacle2.enabled = False
+                        buoyObstacle2.ypos = SCREEN_HEIGHT*2
+                        next_period_countdown = 56
+                        pygame.mixer.music.stop()
+                        clock_text = clock_font.render(str(curr_year) + ' MYA | '+str(next_period_countdown)+' MILLION YEARS LEFT |', True, clock_text_color)
+                        player_health_text = ui_font.render('HEALTH: ' + str(player.healthbar()), True, (255, 255, 255))
+                        player_speed_text = ui_font.render('SPEED: ' + str(player.speedbar()), True, (255, 255, 255))
+                        player_score_text = ui_font.render('SCORE: ' + '{:0.1f}'.format(player.score), True, (255, 255, 255))
+                        player_total_text = ui_font.render('ANIMALS CAUGHT: ' + str(player.net), True, (255, 255, 255))
+                        curr_period_text = ui_font.render('CAMBRIAN PERIOD', True, (255, 255, 255))
+                        reset_prestige_text()
+            pygame.display.update()
+            clock.tick(40)
 '''                                                     '''
 '''                                                     '''
 '''                                                     '''
